@@ -10,10 +10,20 @@ use stdClass;
 
 class StatsApi
 {
+    /**
+     * @var Authentication
+     */
     private Authentication $auth;
 
+    /**
+     * @var Client
+     */
     private Client $client;
 
+    /**
+     * @param Authentication $authentication
+     * @param array $data
+     */
     public function __construct(Authentication $authentication, array $data)
     {
         $requires = ['username', 'platform'];
@@ -30,6 +40,10 @@ class StatsApi
         ]);
     }
 
+    /**
+     * @param string $parameter
+     * @return string|array|stdClass
+     */
     public function get(string $parameter = ''): string|array|stdClass
     {
         try {
