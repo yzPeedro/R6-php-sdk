@@ -36,21 +36,4 @@ class Authentication
     {
         return $this->api_key;
     }
-
-    public function isKeyValid(): bool
-    {
-        if(! $this->getApiKey()) {
-            return false;
-        }
-
-        try {
-            $client = new Client([ 'defaults' => [ 'verify' => false ] ]);
-            $client->request('GET', 'https://api2.r6stats.com/public-api/stats/Mumiia661/pc/generic')
-            ->withHeader('Authorization', 'Bearer ' . $this->getApiKey());
-
-            return true;
-        } catch (Exception | GuzzleException $exception) {
-            return false;
-        }
-    }
 }
