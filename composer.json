@@ -4,7 +4,8 @@
     "autoload": {
         "psr-4": {
             "RainbowStats\\RainbowStats\\Auth\\": "src/Auth/",
-            "RainbowStats\\RainbowStats\\Stats\\": "src/Stats/"
+            "RainbowStats\\RainbowStats\\Stats\\": "src/Stats/",
+            "RainbowStats\\RainbowStats\\Stats\\Contracts\\": "src/Stats/Contracts"
         }
     },
     "autoload-dev": {
