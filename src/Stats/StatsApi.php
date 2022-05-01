@@ -18,7 +18,12 @@ class StatsApi
     /**
      * @var Client
      */
-    private Client $client;
+    private Client $playerClient;
+
+    /**
+     * @var array
+     */
+    private array $data;
 
     /**
      * @param Authentication $authentication
@@ -26,14 +31,12 @@ class StatsApi
      */
     public function __construct(Authentication $authentication, array $data)
     {
-        $requires = ['username', 'platform'];
-
-        if(! isset($data['statistic_type'])) {
-            $data['statistic_type'] = 'generic';
-        }
-
         $this->auth = $authentication;
-        $this->client = new Client([
+        $data['statistic_type'] = (! isset($data['statistic_type'])) ? 'generic': $data['statistic_type'];
+        $data['region'] = (! isset($data['region'])) ? 'all' : $data['region'];
+        $this->data = $data;
+
+        $this->playerClient = new Client([
             'verify' => false,
             'base_uri' => "https://api2.r6stats.com/public-api/stats/".$data['username']."/".$data['platform']."/".$data['statistic_type'],
             'headers' => ['Authorization' => 'Bearer ' . $this->auth->getApiKey()]
@@ -49,18 +52,40 @@ class StatsApi
         try {
             if(! $parameter) {
                 return json_decode(
-                    $this->client->request('GET')
+                    $this->playerClient->request('GET')
                         ->getBody()
                         ->getContents()
                 );
             }
 
             return json_decode(
-                $this->client->request('GET')
+                $this->playerClient->request('GET')
                 ->getBody()
                 ->getContents())
                 ->$parameter;
 
+        } catch (GuzzleException $exception) {
+            return [
+                'error' => true,
+                'data' => $exception->getMessage(),
+                'code' => $exception->getCode()
+            ];
+        }
+    }
+
+    public function leaderboard(): string|array|stdClass
+    {
+        $gameClient = new Client([
+            'verify' => false,
+            'base_uri' => "https://api2.r6stats.com/public-api/leaderboard/".$this->data['platform']."/".$this->data['region'],
+            'headers' => ['Authorization' => 'Bearer ' . $this->auth->getApiKey()]
+        ]);
+
+        try {
+            return json_decode($gameClient->request('GET')
+                ->getBody()
+                ->getContents()
+            );
         } catch (GuzzleException $exception) {
             return [
                 'error' => true,
