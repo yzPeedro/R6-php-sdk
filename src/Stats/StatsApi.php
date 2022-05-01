@@ -32,6 +32,9 @@ class StatsApi
     public function __construct(Authentication $authentication, array $data)
     {
         $this->auth = $authentication;
+        
+        $data['platform'] = (! array_key_exists('platform', $data)) ? 'pc' : $data['platform'];
+        $data['username'] = (! array_key_exists('username', $data)) ? '' : $data['username'];
         $data['statistic_type'] = (! isset($data['statistic_type'])) ? 'generic': $data['statistic_type'];
         $data['region'] = (! isset($data['region'])) ? 'all' : $data['region'];
         $this->data = $data;
