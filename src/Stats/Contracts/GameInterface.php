@@ -2,7 +2,12 @@
 
 namespace RainbowStats\RainbowStats\Stats\Contracts;
 
+use stdClass;
+
 interface GameInterface
 {
-    public function leaderboard(): array|string|\stdClass;
+    /**
+     * @return array|string|stdClass
+     */
+    public function leaderboard(): array|string|stdClass;
 }

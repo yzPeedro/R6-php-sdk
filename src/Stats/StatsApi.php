@@ -4,7 +4,6 @@ namespace RainbowStats\RainbowStats\Stats;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use PHPUnit\Util\Exception;
 use RainbowStats\RainbowStats\Auth\Authentication;
 use stdClass;
 
@@ -76,6 +75,9 @@ class StatsApi
         }
     }
 
+    /**
+     * @return string|array|stdClass
+     */
     public function leaderboard(): string|array|stdClass
     {
         $gameClient = new Client([

@@ -14,6 +14,8 @@ class Authentication
     private string $api_key;
 
     /**
+     * Create an Authentication class instance.
+     *
      * @param string $api_key
      */
     public function __construct(string $api_key = '')
@@ -22,6 +24,8 @@ class Authentication
     }
 
     /**
+     * Set yor api key in instance, you can get at R6Stats Discord (https://discord.gg/2Hz8wrKk3z).
+     *
      * @param string $api_key
      */
     public function setApiKey(string $api_key): void
@@ -30,6 +34,8 @@ class Authentication
     }
 
     /**
+     * Get yor api key in instance, if you don't have an api key, you can get at R6Stats Discord (https://discord.gg/2Hz8wrKk3z).
+     *
      * @return string
      */
     public function getApiKey(): string
